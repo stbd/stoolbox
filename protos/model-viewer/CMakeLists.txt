@@ -1,21 +1,20 @@
-set(generator_view_src
+set(model_view_src
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cc
     ${path_stb_src}/stb_gl.cc
     ${path_stb_src}/stb_gl_shader.cc
     ${path_stb_src}/stb_gl_object.cc
     ${path_stb_src}/stb_model.cc
-    ${path_stb_src}/stb_generator.cc
     ${path_stb_src}/stb_error.cc
     ${path_stb_src}/stb_buffer.cc
     ${path_gl_src}
     ${log_boost_src}
     )
 
-add_executable(genrator_viewer ${generator_view_src})
+add_executable(model_viewer ${model_view_src})
 
-stb_set_compile_flags(${generator_view_src})
+stb_set_compile_flags(${model_view_src})
 
-target_link_libraries(genrator_viewer
+target_link_libraries(model_viewer
     ${lib_common}
     ${lib_gl}
     ${lib_sdl}
