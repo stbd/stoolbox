@@ -24,17 +24,17 @@ cd "$build_folder"
 cmake .. "-DCMAKE_INSTALL_PREFIX=$target"
 cmake --build . --target install --config Release
 
-# For some reason, when both boost and SDL2 are statistically linked in SToolbox,
-# boost Log throws an exception related to Gregorian year, thus only use dynamically
+# For some reason, when both boost and SDL2 are both statistically linked to SToolbox,
+# boost Log throws an exception related to Gregorian year. Thus only use dynamically
 # linked SDL
 
-# Instal target apparently depends on all other targets, and all files are installed to target path
-# This is a problem because project has targets for both statically and dynamicly linked 
-# projects, and both get installed by default
+# Also, instal target apparently depends on all other targets, and all files are installed to target path.
+# This is a problem because SDL project has targets for both statically and dynamicly linked 
+# libraries, and both get installed by default
 
-# Workaround for this is to first run install target so that all headers get installed
-# Then manually remove installed libraries, rebuild only dynamic version of library
-# and copy that files manually to target path
+# Workaround for this: first run install target so that all headers and libraries get installed.
+# Then manually remove installed .libs, rebuild only dynamic version of SDL
+# and install that manually to target path
 
 rm -Force -Recurse "$build_folder/Release/*"
 cmake --build . --target SDL2 --config Release
