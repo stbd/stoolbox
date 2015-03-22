@@ -468,19 +468,15 @@ stb::ModelData stb::generateSphere(const U subdivides, const float radius)
 {
     const U numberOfBaseVertices = 6;
     const Attribute baseVertices[numberOfBaseVertices] = {
-        //Top, little hax with .1 as x to avoid calculating nan as angle in calculateUvCoordinate
-        Attribute(Vertex(0.0f, radius, 0.0f), Normal(0.0f, 1.0f, 0.0f), calculateUvCoordinate(Vertex(0.1f, radius, 0.0f), radius)),
-
-        Attribute(Vertex(0.0f, 0.0f, radius), Normal(0.0f, 0.0f, 1.0f), calculateUvCoordinate(Vertex(0.0f, 0.0f, radius), radius)),//below previous
-        Attribute(Vertex(-radius, 0.0f, 0.0f), Normal(-1.0f, 0.0f, 0.0f), calculateUvCoordinate(Vertex(-radius, 0.0f, 0.0f), radius)),//right of previous
+        Attribute(Vertex(0.0f, radius, 0.0f), Normal(0.0f, 1.0f, 0.0f), Uv(0.0f, 1.0f)), // Top
+        Attribute(Vertex(0.0f, 0.0f, radius), Normal(0.0f, 0.0f, 1.0f), calculateUvCoordinate(Vertex(0.0f, 0.0f, radius), radius)),// Below previous
+        Attribute(Vertex(-radius, 0.0f, 0.0f), Normal(-1.0f, 0.0f, 0.0f), calculateUvCoordinate(Vertex(-radius, 0.0f, 0.0f), radius)),// Right of previous
         Attribute(Vertex(0.0f, 0.0f, -radius), Normal(0.0f, 0.0f, -1.0f), calculateUvCoordinate(Vertex(0.0f, 0.0f, -radius), radius)),
         Attribute(Vertex(radius, 0.0f, 0.0f), Normal(1.0f, 0.0f, 0.0f), calculateUvCoordinate(Vertex(radius, 0.0f, 0.0f), radius)),
-
-        //Bottom, little hax with .1 as x to avoid calculating nan as angle in calculateUvCoordinate
-        Attribute(Vertex(0.0f, -radius, 0.0f), Normal(0.0f, -1.0f, 0.0f), calculateUvCoordinate(Vertex(0.1f, -radius, 0.0f), radius)),
+        Attribute(Vertex(0.0f, -radius, 0.0f), Normal(0.0f, -1.0f, 0.0f), Uv(0.0f, 0.0f)) // Bottom
     };
 
-    const U numberOfVertice = 8 * (std::pow(4, subdivides) * 3); // This is a guess, a poor guess
+    const U numberOfVertice = 4098; // Number of vertices for 4 subdivides
     AttributeContainer attributeContainer(numberOfVertice);
     IndiceContainter indiceContainer(numberOfVertice);
 
