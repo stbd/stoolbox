@@ -9,6 +9,7 @@ set(path_glm ${CMAKE_CURRENT_SOURCE_DIR}/libs/glm/)
 set(path_freetype ${CMAKE_CURRENT_SOURCE_DIR}/libs/freetype)
 set(path_gl ${CMAKE_CURRENT_SOURCE_DIR}/libs/gl)
 set(path_sdl ${CMAKE_CURRENT_SOURCE_DIR}/libs/sdl2)
+set(path_freetype ${CMAKE_CURRENT_SOURCE_DIR}/libs/freetype)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     #-----------------------------------LINUX-----------------------------------#
@@ -19,6 +20,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # Compilation flags
     # SToolbox macro for platform
     set(flags_c "-DSTB_LINUX")
+
     set(flags_c "-Wall -Wextra -pedantic")
     set(flags_cc "-Wall -Wextra -pedantic -std=c++11")
 
@@ -89,6 +91,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(lib_boost_datetime "${boost_prefix}_date_time-${boost_postfix}")
     set(lib_boost_unit_test "${boost_prefix}_unit_test_framework-${boost_postfix}")
 
+    set(freetype_version 550)
+    set(lib_freetype ${path_freetype}/lib/freetype${freetype_version}.lib)
+
     set(lib_common
         "OpenGL32"
         "winmm"
@@ -113,6 +118,7 @@ include_directories(SYSTEM
     "${path_freetype}/include"
     "${path_gl}"
     "${path_sdl}/include"
+    "${path_freetype}/include"
     )
 
 include_directories(
