@@ -9,7 +9,6 @@ set(demo_src
     ${path_stb_src}/stb_model.cc
     ${path_stb_src}/stb_generator.cc
     ${log_boost_src}
-    ${path_gl_src}
     )
 
 add_executable(demo
@@ -25,6 +24,7 @@ target_link_libraries(demo
     ${lib_boost_filesys}
     ${lib_boost_datetime}
     ${lib_boost_chrono}
+    lib_gl
     )
 
 stb_set_compile_flags(${demo_src})

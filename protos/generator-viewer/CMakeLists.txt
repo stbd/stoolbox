@@ -7,7 +7,6 @@ set(generator_view_src
     ${path_stb_src}/stb_generator.cc
     ${path_stb_src}/stb_error.cc
     ${path_stb_src}/stb_buffer.cc
-    ${path_gl_src}
     ${log_boost_src}
     )
 
@@ -26,4 +25,5 @@ target_link_libraries(genrator_viewer
     ${lib_boost_datetime}
     ${lib_boost_chrono}
     ${lib_boost_options}
+    lib_gl
 )

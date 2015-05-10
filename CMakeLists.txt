@@ -6,7 +6,6 @@ set(path_stb_root ${CMAKE_CURRENT_SOURCE_DIR})
 set(path_stb_src ${path_stb_root}/src)
 set(path_boost ${CMAKE_CURRENT_SOURCE_DIR}/libs/boost)
 set(path_glm ${CMAKE_CURRENT_SOURCE_DIR}/libs/glm/)
-set(path_freetype ${CMAKE_CURRENT_SOURCE_DIR}/libs/freetype)
 set(path_gl ${CMAKE_CURRENT_SOURCE_DIR}/libs/gl)
 set(path_sdl ${CMAKE_CURRENT_SOURCE_DIR}/libs/sdl2)
 set(path_freetype ${CMAKE_CURRENT_SOURCE_DIR}/libs/freetype)
@@ -109,7 +108,6 @@ endif()
 
 #-----------------------------------Common-----------------------------------#
 
-set(path_gl_src "${path_gl}/gl_stb.c")
 set(log_boost_inc "${path_stb_src}/stb_log_boost.cc")
 set(log_boost_src "${path_stb_src}/stb_log_boost.cc")
 
@@ -123,6 +121,13 @@ include_directories(SYSTEM
 
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/inc"
+    )
+
+# Target for OpenGL extension wrangler
+set(path_gl_src "${path_gl}/gl_stb.c")
+add_library(lib_gl
+    STATIC
+    ${path_gl_src}
     )
 
 #-----------------------------------Common-----------------------------------#
