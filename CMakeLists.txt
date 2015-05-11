@@ -14,6 +14,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     #-----------------------------------LINUX-----------------------------------#
     include_directories(SYSTEM
         ${path_boost}/include
+        ${path_freetype}/include/freetype2
     )
 
     # Compilation flags
@@ -32,7 +33,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         set(flags_cc "${flags_cc} -g")
     endif()
 
-    set(lib_sdl ${path_sdl}/lib/libSDL2.a)
     set(lib_common
         GL
         m
@@ -40,7 +40,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         rt
         pthread
         )
-
+    set(lib_sdl ${path_sdl}/lib/libSDL2.a)
+    set(lib_freetype ${path_freetype}/lib/libfreetype.a)
     set(lib_boost_log "${path_boost}/lib/libboost_log.a")
     set(lib_boost_thread "${path_boost}/lib/libboost_thread.a")
     set(lib_boost_system "${path_boost}/lib/libboost_system.a")
@@ -94,7 +95,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(lib_boost_datetime "${boost_prefix}_date_time-${boost_postfix}")
     set(lib_boost_unit_test "${boost_prefix}_unit_test_framework-${boost_postfix}")
 
-    set(freetype_version 550)
+    set(freetype_version 255)
     set(lib_freetype ${path_freetype}/lib/freetype${freetype_version}.lib)
 
     set(lib_common
