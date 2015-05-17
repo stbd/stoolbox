@@ -20,8 +20,12 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # SToolbox macro for platform
     set(flags_c "-DSTB_LINUX")
 
-    set(flags_c "-Wall -Wextra -pedantic")
-    set(flags_cc "-Wall -Wextra -pedantic -std=c++11")
+    set(flags_c "${flags_c} -Wall")
+    set(flags_c "${flags_c} -Wextra")
+    set(flags_c "${flags_c} -pedantic")
+
+    set(flags_cc "${flags_c}")
+    set(flags_cc "${flags_cc} -std=c++11")
 
     if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
         set(flags_c "${flags_c} -g")
