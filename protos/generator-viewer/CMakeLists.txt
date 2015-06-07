@@ -1,4 +1,4 @@
-set(generator_view_src
+set(generator_src
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cc
     ${path_stb_src}/stb_gl.cc
     ${path_stb_src}/stb_gl_shader.cc
@@ -10,11 +10,11 @@ set(generator_view_src
     ${log_boost_src}
     )
 
-add_executable(genrator_viewer ${generator_view_src})
+stb_set_compile_flags(${generator_src})
 
-stb_set_compile_flags(${generator_view_src})
+add_executable(proto_generator ${generator_src})
 
-target_link_libraries(genrator_viewer
+target_link_libraries(proto_generator
     ${lib_common}
     ${lib_gl}
     ${lib_sdl}

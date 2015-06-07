@@ -13,11 +13,11 @@ set(font_src
     ${path_stb_src}/stb_model.cc
     )
 
-add_executable(font
+add_executable(proto_font
     ${font_src}
     )
 
-target_link_libraries(font
+target_link_libraries(proto_font
     ${lib_common}
     ${lib_sdl}
     ${lib_freetype}

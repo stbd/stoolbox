@@ -11,11 +11,11 @@ set(demo_src
     ${log_boost_src}
     )
 
-add_executable(demo
+add_executable(proto_demo
     ${demo_src}
     )
 
-target_link_libraries(demo
+target_link_libraries(proto_demo
     ${lib_common}
     ${lib_sdl}
     ${lib_boost_log}
