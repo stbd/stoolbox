@@ -28,6 +28,7 @@ namespace stb
         size_t atlasHeight;
         size_t charactersPerRow;
         size_t characterRows;
+        float maxHorizontalAdvanceAsPercentageOfWidth;
         AtlasCharacters characters;
     };
 
@@ -39,6 +40,14 @@ namespace stb
         const size_t charHeight = 512,
         const size_t dpiX = 72,
         const size_t dpiY = 72
+        );
+    void renderText(
+        CharacterAtlas & atlas,
+        const std::string & text,
+        std::string & buffer,
+        size_t & textureWidthTexels,
+        size_t & textureHeightTexels,
+        size_t & numberOfhorizontalSurplusTexels
         );
 }
 

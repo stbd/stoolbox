@@ -58,6 +58,19 @@ public:
             return false;
         }
 
+        {
+            // Just to show the interface
+            stb::CharacterAtlas atlas;
+            createCharacterAtlas(atlas, fontPath.c_str(), "abc", 3, 40);
+            std::string buf;
+            size_t w = 0;
+            size_t h = 0;
+            size_t s = 0;
+            renderText(atlas, "ab", buf, w, h, s);
+            // Buffer would now have texture with text "ab" of size "w" * "h"
+            // with "s" number of extra texels
+        }
+
         return true;
     }
 
@@ -113,16 +126,16 @@ private:
 };
 
 // For faster debugging
-//int main(int /*argc*/, char ** /*argv*/)
-/*
+int main(int /*argc*/, char ** /*argv*/)
+
 {
 #ifdef STB_LINUX
     std::string fontPath("/usr/share/fonts/TTF/UbuntuMono-BI.ttf");
 #elif STB_WINDOWS
     std::string fontPath("C:/Windows/Fonts/arial.ttf");
 #endif
-*/
 
+    /*
 int main(int argc, char * argv[]) {
 
     if (argc != 2) {
@@ -130,7 +143,7 @@ int main(int argc, char * argv[]) {
         return 0;
     }
     std::string fontPath(argv[1]);
-    
+    */
 
     Impl impl;
     assert(impl.init(fontPath) == true && "Initialization failed");

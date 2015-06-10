@@ -287,11 +287,15 @@ static void createCharacterAtlasImpl(
             atlasLocationX * charMaxWidth, atlasLocationY * (charMaxAscender + charMaxDescender) + descenderOffset,
             characterAtlas.atlasWidth);
         
+        const float horizontalAdvanceAsPercentageOfWidth = (float)(ftFace->glyph->metrics.horiAdvance >> 6) / (float)(charMaxWidth);
+
         characterAtlas.characters[c] = stb::Character(
             i,
-            (float)(ftFace->glyph->metrics.horiAdvance >> 6) / (float)(charMaxWidth),
+            horizontalAdvanceAsPercentageOfWidth,
             (float)(ftFace->glyph->metrics.horiBearingX >> 6) / (float)(charMaxWidth)
             );
+
+        characterAtlas.maxHorizontalAdvanceAsPercentageOfWidth = std::max(horizontalAdvanceAsPercentageOfWidth, characterAtlas.maxHorizontalAdvanceAsPercentageOfWidth);
     }
 }
 
@@ -331,9 +335,52 @@ void stb::createCharacterAtlas(
         atlasItemsRows
         );
 
+    if (stb::isError()) {
+        return ;
+    }
+
     characterAtlas.charactersPerRow = atlasItemsPerRow;
     characterAtlas.characterRows = atlasItemsRows;
 
     FT_Done_Face(ftFace);
     FT_Done_FreeType(ftLib);
+}
+
+void stb::renderText(
+    CharacterAtlas & atlas,
+    const std::string & text,
+    std::string & buffer,
+    size_t & textureWidthTexels,
+    size_t & textureHeightTexels,
+    size_t & numberOfhorizontalSurplusTexels
+    )
+{
+    const size_t characterHeight = static_cast<size_t>(static_cast<double>(atlas.atlasHeight) / static_cast<double>(atlas.characterRows));
+    const size_t characterWidth = static_cast<size_t>(static_cast<double>(atlas.atlasWidth) / static_cast<double>(atlas.charactersPerRow));
+    const size_t maxAdvanceTexels = static_cast<size_t>(static_cast<double>(characterWidth) * atlas.maxHorizontalAdvanceAsPercentageOfWidth);
+
+    // Estimate needed memory by worst case
+    textureWidthTexels = maxAdvanceTexels * text.length();
+    textureHeightTexels = characterHeight;
+    buffer.assign(textureHeightTexels * textureWidthTexels, 0);
+
+    size_t positionHorizontal = 0;
+    for (const char & t : text) {
+
+        const stb::Character & c = atlas.characters[t];
+        const size_t atlasPosX = c.atlasIndex % atlas.charactersPerRow;
+        const size_t atlasPosY = c.atlasIndex / atlas.charactersPerRow;
+        const char * beginningOfCharacterAtAtlas = atlas.buffer.data() + (atlasPosY * atlas.atlasWidth) + (atlasPosX * characterWidth);
+
+        for (size_t row = 0; row < characterHeight; ++row) {
+            char * dest = &buffer[0] + (row * textureWidthTexels) + positionHorizontal;
+            const char * source = beginningOfCharacterAtAtlas + (row * atlas.atlasWidth);
+            memcpy(dest, source, characterWidth);
+        }
+        const size_t advance = static_cast<size_t>(static_cast<double>(characterWidth) * c.advanceAsPercentageOfWidth);
+        positionHorizontal += advance;
+    }
+
+    // Return number of texels the estimate was wrong
+    numberOfhorizontalSurplusTexels = textureWidthTexels - positionHorizontal;
 }
