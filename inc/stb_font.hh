@@ -34,7 +34,8 @@ namespace stb
 
     void createCharacterAtlas(
         CharacterAtlas & characterAtlas,
-        const char * pathToTtf,
+        const char * ttfFontData,
+        const size_t sizeOfTtfFontData,
         const char * charactersToRender,
         const size_t numberOfCharasterToRender,
         const size_t charHeight = 512,

@@ -14,6 +14,7 @@
 #include <glm/vec2.hpp>
 #include <assert.h>
 #include <string>
+#include <fstream>
 
 class Impl
 {
@@ -52,7 +53,19 @@ public:
             return false;
         }
 
-        stb::initTextHud(m_hud, fontPath.c_str(), 0, glm::vec3(0.0f, 0.5f, 0.5f), (float)w / (float)h);
+        std::string fontData;
+        {
+            // Read font to memory
+            std::ifstream f(fontPath.c_str(), std::ios_base::in | std::ios_base::binary);
+            f.seekg(0, f.end);
+            const size_t fontDataSize = f.tellg();
+            f.seekg(0, f.beg);
+
+            fontData.assign(fontDataSize, 0);
+            f.read(&fontData[0], fontDataSize);
+        }
+
+        stb::initTextHud(m_hud, fontData.c_str(), fontData.size(), 0, glm::vec3(0.0f, 0.5f, 0.5f), (float)w / (float)h);
         if (stb::isError()) {
             LogFatal(m_log) << "Failed to load font: " << stb::getErrorDescription();
             return false;
@@ -61,7 +74,7 @@ public:
         {
             // Just to show the interface
             stb::CharacterAtlas atlas;
-            createCharacterAtlas(atlas, fontPath.c_str(), "abc", 3, 40);
+            createCharacterAtlas(atlas, fontData.c_str(), fontData.size(), "abc", 3, 40);
             std::string buf;
             size_t w = 0;
             size_t h = 0;
@@ -126,16 +139,16 @@ private:
 };
 
 // For faster debugging
-int main(int /*argc*/, char ** /*argv*/)
-
+//int main(int /*argc*/, char ** /*argv*/)
+/*
 {
 #ifdef STB_LINUX
     std::string fontPath("/usr/share/fonts/TTF/UbuntuMono-BI.ttf");
 #elif STB_WINDOWS
     std::string fontPath("C:/Windows/Fonts/arial.ttf");
 #endif
-
-    /*
+*/
+    
 int main(int argc, char * argv[]) {
 
     if (argc != 2) {
@@ -143,7 +156,7 @@ int main(int argc, char * argv[]) {
         return 0;
     }
     std::string fontPath(argv[1]);
-    */
+    
 
     Impl impl;
     assert(impl.init(fontPath) == true && "Initialization failed");

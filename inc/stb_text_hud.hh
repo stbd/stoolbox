@@ -24,7 +24,8 @@ namespace stb
 
     void initTextHud(
         TextHud & hud,
-        const char * pathToTtf,
+        const char * ttfFontData,
+        const size_t sizeOfTtfFontData,
         const GL_U openglTextureUnit,
         const glm::vec3 & textColor,
         const float aspectRatio,

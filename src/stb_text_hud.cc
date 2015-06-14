@@ -131,7 +131,8 @@ static bool getAttributeLocation(const char * variableName, GL_U shader, GL_I & 
 
 void stb::initTextHud(
     stb::TextHud & hud,
-    const char * pathToTtf,
+    const char * ttfFontData,
+    const size_t sizeOfTtfFontData,
     const GL_U openglTextureUnit,
     const glm::vec3 & textColor,
     const float aspectRatio,
@@ -154,7 +155,8 @@ void stb::initTextHud(
 
     createCharacterAtlas(
         atlas,
-        pathToTtf,
+        ttfFontData,
+        sizeOfTtfFontData,
         characters,
         numberOfCharacters,
         charHeight,

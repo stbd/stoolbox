@@ -181,7 +181,8 @@ static void createCharacterAtlasImpl(
     CharacterAtlas & characterAtlas,
     FT_Library & ftLib,
     FT_Face & ftFace,
-    const char * pathToTtf,
+    const char * ttfFontData,
+    const size_t sizeOfTtfFontData,
     const char * charactersToRender,
     const size_t numberOfCharasterToRender,
     const size_t charHeight,
@@ -197,7 +198,7 @@ static void createCharacterAtlasImpl(
         return;
     }
 
-    if ((ftErrorCode = FT_New_Face(ftLib, pathToTtf, 0, &ftFace)) != 0) {
+    if ((ftErrorCode = FT_New_Memory_Face(ftLib, (const FT_Byte *)ttfFontData, sizeOfTtfFontData, 0, &ftFace)) != 0) {
         stb::setError("FT_New_Face failed, code=%d\n", ftErrorCode);
         return;
     }
@@ -301,7 +302,8 @@ static void createCharacterAtlasImpl(
 
 void stb::createCharacterAtlas(
     CharacterAtlas & characterAtlas,
-    const char * pathToTtf,
+    const char * ttfFontData,
+    const size_t sizeOfTtfFontData,
     const char * charactersToRender,
     const size_t numberOfCharasterToRender,
     const size_t charHeight,
@@ -325,7 +327,8 @@ void stb::createCharacterAtlas(
         characterAtlas,
         ftLib,
         ftFace,
-        pathToTtf,
+        ttfFontData,
+        sizeOfTtfFontData,
         charactersToRender,
         numberOfCharasterToRender,
         charHeight,
