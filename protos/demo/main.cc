@@ -186,7 +186,7 @@ private:
     stb::Log m_log;
 };
 
-int main(int argc, char * argv[])
+int main(int /*argc*/, char ** /*argv*/)
 {
     Impl impl;
     assert(impl.init() == true && "Initialization failed");

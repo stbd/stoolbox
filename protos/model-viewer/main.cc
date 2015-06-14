@@ -177,7 +177,7 @@ bool initShader(stb::Shader & shader, ShaderVars & shaderVars, const Parameters 
     }
 
     const float fovy = glm::radians(50.f);
-    const glm::mat4 projectionMatrix = 
+    const glm::mat4 projectionMatrix =
         glm::perspective<float>(fovy, static_cast<float>(params.w) / static_cast<float>(params.h), 0.1f, 100.0f);
 
     glUseProgram(stb::glRef(shader));
@@ -311,7 +311,7 @@ public:
             return false;
         }
         logModelData(model, m_log);
-       
+
         GLint layoutPos = -1;
         GLint layoutNormal = -1;
         GLint layoutUv = -1;
@@ -387,7 +387,6 @@ public:
 
     U32 handleInput()
     {
-        static const U32 MAX_NUMBER_OF_ENTIES = 2;
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
